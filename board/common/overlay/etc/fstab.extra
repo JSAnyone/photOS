@@ -1,2 +1,2 @@
-# <file system> <mount pt>            <type>   <options>         <dump> <pass>
-
+# <file system>                <mount pt>                    <type>   <options>         <dump> <pass>
+/data/photoframe/piusb.bin     /data/photoframe/images_usb   vfat     users,umask=000   0      2

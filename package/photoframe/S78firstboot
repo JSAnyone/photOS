@@ -1,0 +1,35 @@
+#!/bin/bash
+
+BIN_PATH="/data/photoframe/piusb.bin"
+
+test -n "${OS_VERSION}" || source /etc/init.d/base
+
+create_piusb() {
+    if [ ! -f $BIN_PATH ]; then
+        msg_begin "Creating piusb.bin"
+        /bin/dd bs=1M if=/dev/zero of=$BIN_PATH count=4096
+        test $? == 0 && msg_done || msg_fail
+        msg_begin "Formatting piusb.bin"
+        /sbin/mkdosfs $BIN_PATH -F 32 -I
+        test $? == 0 && msg_done || msg_fail
+    else
+        msg_begin "piusb.bin already created"
+        msg_done
+    fi
+}
+
+case "$1" in
+    start)
+        create_piusb
+        ;;
+
+    stop)
+        true
+        ;;
+
+    *)
+        echo "Usage: $0 {start}"
+        exit 1
+esac
+
+exit $?

@@ -1,27 +1,24 @@
 #!/bin/bash
 
-CONF="/data/photoframe/photoframe.conf"
+WATCH_PATH="/data/photoframe/images_usb"
 
-PROG=/usr/bin/photoframe.sh
+PROG=/usr/bin/usb_share.py
 
 test -x ${PROG} || exit 0
 
 test -n "${OS_VERSION}" || source /etc/init.d/base
 
-mkdir -p $(dirname $CONF)
+mkdir -p ${WATCH_PATH}
 
 start() {
-  msg_begin "Syncing photos"
-  ${PROG} sync &
-
-  msg_begin "Starting photoframe"
-  ${PROG} start > /dev/null &
+  msg_begin "Starting usb_share"
+  ${PROG} > /dev/null &
 
   test $? == 0 && msg_done || msg_fail
 }
 
 stop() {
-  msg_begin "Stopping photoframe"
+  msg_begin "Stopping usb_share"
   killall -q $(basename ${PROG})
   test $? == 0 && msg_done || msg_fail
 }

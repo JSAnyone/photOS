@@ -7,3 +7,4 @@ dtparam=i2s=on
 dtparam=spi=on
 dtparam=audio=on
 
+dtoverlay=dwc2
