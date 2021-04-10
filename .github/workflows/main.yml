@@ -1,0 +1,24 @@
+name: Build RPi1
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+  # Allow manual triggering of action
+  workflow_dispatch:
+
+jobs:
+  create_image_RPI1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: images
+          key: photos-${{ github.sha }}
+      - name: Build RPI1 image
+        run: |
+          ./build.sh raspberrypi
+          ./build.sh raspberrypi mkrelease
+          mv output/raspberrypi/images/photOS-raspberrypi*.img.xz images/
