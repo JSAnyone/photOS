@@ -213,6 +213,7 @@ function mode {
         #remove unnecessary and error producing lines 
         sed -i '/dwc2/d' /etc/modules
         sed -i 'dtoverlay=dwc2' /boot/config.txt
+        sed -i '/data/photoframe/piusb.bin     /data/photoframe/images_usb   vfat     users,umask=000,noauto   0      2' etc/fstab.extra
         #disable not needed init scripts
         touch /data/etc/no_S78firstboot
         touch /data/etc/no_S79usb_share
@@ -227,6 +228,7 @@ function mode {
         #add necessary lines 
         grep -qxF 'dwc2' /etc/modules || echo "dwc2" >> /etc/modules
         grep -qxF 'dtoverlay=dwc2' /boot/config.txt || echo "dtoverlay=dwc2" >> /boot/config.txt    
+        grep -qxF '/data/photoframe/piusb.bin     /data/photoframe/images_usb   vfat     users,umask=000,noauto   0      2' /etc/fstab.extra || echo "/data/photoframe/piusb.bin     /data/photoframe/images_usb   vfat     users,umask=000,noauto   0      2" >> /etc/fstab.extra    
         #enable needed init scripts
         rm -f /data/etc/no_S78firstboot
         rm -f /data/etc/no_S79usb_share                                             
