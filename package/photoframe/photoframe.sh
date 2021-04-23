@@ -206,14 +206,14 @@ function display_usb {
 
 function mode {
   case "$1" in                                                    
-    hmdi)                                                                                               
+    hdmi)                                                                                               
         #remount partitions read/write
         mount -o remount, rw /
         mount -o remount, rw /boot                                                 
         #remove unnecessary and error producing lines 
-        sed -i '/dwc2/d' /etc/modules
-        sed -i 'dtoverlay=dwc2' /boot/config.txt
-        sed -i '/data/photoframe/piusb.bin     /data/photoframe/images_usb   vfat     users,umask=000,noauto   0      2' etc/fstab.extra
+        sed -i "/dwc2/d" /etc/modules
+        sed -i "/dtoverlay=dwc2/d" /boot/config.txt
+        sed -i "/\/data\/photoframe\/piusb.bin     \/data\/photoframe\/images_usb   vfat     users,umask=000,noauto   0      2/d" /etc/fstab.extra
         #disable not needed init scripts
         touch /data/etc/no_S78firstboot
         touch /data/etc/no_S79usb_share
@@ -226,9 +226,9 @@ function mode {
         mount -o remount, rw /
         mount -o remount, rw /boot                                                 
         #add necessary lines 
-        grep -qxF 'dwc2' /etc/modules || echo "dwc2" >> /etc/modules
-        grep -qxF 'dtoverlay=dwc2' /boot/config.txt || echo "dtoverlay=dwc2" >> /boot/config.txt    
-        grep -qxF '/data/photoframe/piusb.bin     /data/photoframe/images_usb   vfat     users,umask=000,noauto   0      2' /etc/fstab.extra || echo "/data/photoframe/piusb.bin     /data/photoframe/images_usb   vfat     users,umask=000,noauto   0      2" >> /etc/fstab.extra    
+        grep -qxF "dwc2" /etc/modules || echo "dwc2" >> /etc/modules
+        grep -qxF "dtoverlay=dwc2" /boot/config.txt || echo "dtoverlay=dwc2" >> /boot/config.txt    
+        grep -qxF "/data/photoframe/piusb.bin     /data/photoframe/images_usb   vfat     users,umask=000,noauto   0      2" /etc/fstab.extra || echo "/data/photoframe/piusb.bin     /data/photoframe/images_usb   vfat     users,umask=000,noauto   0      2" >> /etc/fstab.extra    
         #enable needed init scripts
         rm -f /data/etc/no_S78firstboot
         rm -f /data/etc/no_S79usb_share                                             
@@ -246,7 +246,7 @@ esac
 case "$1" in
     start)
         #check if hdmi mode is enabled
-        if grep -qxF 'dtoverlay=dwc2' /boot/config.txt; then
+        if grep -qxF "dtoverlay=dwc2" /boot/config.txt; then
           echo "HDMI-mode is required for this operation!"
           exit 1
         else
@@ -256,7 +256,7 @@ case "$1" in
 
     stop)
         #check if hdmi mode is enabled
-        if grep -qxF 'dtoverlay=dwc2' /boot/config.txt; then
+        if grep -qxF "dtoverlay=dwc2" /boot/config.txt; then
           echo "HDMI-mode is required for this operation!"
           exit 1
         else
@@ -266,7 +266,7 @@ case "$1" in
 
     restart)
         #check if hdmi mode is enabled
-        if grep -qxF 'dtoverlay=dwc2' /boot/config.txt; then
+        if grep -qxF "dtoverlay=dwc2" /boot/config.txt; then
           echo "HDMI-mode is required for this operation!"
           exit 1
         else
@@ -279,7 +279,7 @@ case "$1" in
         #always sync webdav
         sync_dav
         #sync usb only if usb-mode is enabled
-        if grep -qxF 'dtoverlay=dwc2' /boot/config.txt; then
+        if grep -qxF "dtoverlay=dwc2" /boot/config.txt; then
           if [ -f "$MOUNTPOINT_USB/blackimage.png" ]; then
             sync_usb black
           else
@@ -290,7 +290,7 @@ case "$1" in
             
     display) 
         #depends on wether usb-mode or hdmi-mode is enabled
-        if grep -qxF 'dtoverlay=dwc2' /boot/config.txt; then
+        if grep -qxF "dtoverlay=dwc2" /boot/config.txt; then
           display_usb $2
         else
           display_hdmi $2
@@ -303,7 +303,7 @@ case "$1" in
 
     test)
         #check if hdmi mode is enabled
-        if grep -qxF 'dtoverlay=dwc2' /boot/config.txt; then
+        if grep -qxF "dtoverlay=dwc2" /boot/config.txt; then
           echo "HDMI-mode is required for this operation!"
           exit 1
         else
