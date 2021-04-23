@@ -24,7 +24,7 @@ create_piusb() {
 
 mount_piusb() {
     msg_begin "Mounting piusb.bin"
-    mount $MOUNT_PATH
+    mount --fstab /etc/fstab.extra $MOUNT_PATH
     test $? == 0 && msg_done || msg_fail
 }
 
