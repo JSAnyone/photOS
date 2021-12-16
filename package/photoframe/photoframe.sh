@@ -215,8 +215,8 @@ function mode {
         sed -i "/dtoverlay=dwc2/d" /boot/config.txt
         sed -i "/\/data\/photoframe\/piusb.bin     \/data\/photoframe\/images_usb   vfat     users,umask=000,noauto   0      2/d" /etc/fstab.extra
         #disable not needed init scripts
-        touch /data/etc/no_S78firstboot
-        touch /data/etc/no_S79usb_share
+        touch /data/etc/no_S77firstboot
+        touch /data/etc/no_S78usb_share
         #Reboot, Filesystem will be mounted read-only automatically 
         reboot
         ;;                                                      
@@ -230,8 +230,8 @@ function mode {
         grep -qxF "dtoverlay=dwc2" /boot/config.txt || echo "dtoverlay=dwc2" >> /boot/config.txt    
         grep -qxF "/data/photoframe/piusb.bin     /data/photoframe/images_usb   vfat     users,umask=000,noauto   0      2" /etc/fstab.extra || echo "/data/photoframe/piusb.bin     /data/photoframe/images_usb   vfat     users,umask=000,noauto   0      2" >> /etc/fstab.extra    
         #enable needed init scripts
-        rm -f /data/etc/no_S78firstboot
-        rm -f /data/etc/no_S79usb_share                                             
+        rm -f /data/etc/no_S77firstboot
+        rm -f /data/etc/no_S78usb_share                                             
         #Reboot, Filesystem will be mounted read-only automatically 
         reboot
         ;;                                                      
